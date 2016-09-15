@@ -162,8 +162,8 @@ var Touch = function(Glide, Core) {
                 }
             }
 
-            // While angle is lower than 45 degree.
-            if ((this.touchSin * 180 / Math.PI) < 45) {
+            // While angle is lower than maxAngle degree.
+            if ((this.touchSin * 180 / Math.PI) < Glide.options.maxAngle) {
                 // Prevent propagation.
                 event.stopPropagation();
                 // Prevent scrolling.
@@ -241,12 +241,12 @@ var Touch = function(Glide, Core) {
 
             // While touch is positive and greater than
             // distance set in options move backward.
-            if (touchDistance > distanceLimiter && touchDeg < 45) {
+            if (touchDistance > distanceLimiter && touchDeg < Glide.options.maxAngle) {
                 Core.Run.make('<');
             }
             // While touch is negative and lower than negative
             // distance set in options move forward.
-            else if (touchDistance < -distanceLimiter && touchDeg < 45) {
+            else if (touchDistance < -distanceLimiter && touchDeg < Glide.options.maxAngle) {
                 Core.Run.make('>');
             }
             // While swipe don't reach distance apply previous transform.
