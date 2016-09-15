@@ -1774,6 +1774,14 @@ var Touch = function(Glide, Core) {
             // Calculate start, end points.
             var subExSx = parseInt(touch.pageX) - this.touchStartX;
             var subEySy = parseInt(touch.pageY) - this.touchStartY;
+
+            // Do nothing if not moved enough
+            var xBelowMin = Glide.axis == 'x' && (Math.abs(subExSx) <= Glide.options.minDistance);
+            var yBelowMin = Glide.axis == 'y' && (Math.abs(subEySy) <= Glide.options.minDistance);
+            if(xBelowMin || yBelowMin) {
+                return;
+            }
+
             // Bitwise subExSx pow.
             var powEX = Math.abs(subExSx << 2);
             // Bitwise subEySy pow.
@@ -1792,8 +1800,8 @@ var Touch = function(Glide, Core) {
             );
 
             // Make offset animation.
-            // While angle is lower than 45 degree.
-            if ((this.touchSin * 180 / Math.PI) < 45) {
+            // While angle is lower than maxAngle.
+            if ((this.touchSin * 180 / Math.PI) < Glide.options.maxAngle) {
                 Core.Animation.make(Core.Helper.byAxis(subExSx, subEySy));
             }
 
@@ -2044,6 +2052,8 @@ var Glide = function(element, options) {
         startAt: 1,
         hoverpause: true,
         keyboard: true,
+        maxAngle: 45,
+        minDistance: 10,
         touchDistance: 80,
         dragDistance: 120,
         animationDuration: 400,

@@ -19,6 +19,8 @@ var Glide = function(element, options) {
         startAt: 1,
         hoverpause: true,
         keyboard: true,
+        maxAngle: 45,
+        minDistance: 10,
         touchDistance: 80,
         dragDistance: 120,
         animationDuration: 400,
